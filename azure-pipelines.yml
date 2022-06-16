@@ -15,7 +15,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+
 - task: NuGetCommand@2
+  displayName: 'Nuget pack'
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
@@ -25,10 +31,12 @@ steps:
     patchVersion: '0'
 
 - task: NuGetAuthenticate@1
+  displayName: 'Nuget authentication'
   inputs:
     nuGetServiceConnections: 'Nuget Org'
 
 - task: NuGetCommand@2
+  displayName: 'Nuget push'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
