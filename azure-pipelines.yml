@@ -16,11 +16,13 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
+  displayName: 'nuget pack'
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
@@ -29,7 +31,12 @@ steps:
     minorVersion: '0'
     patchVersion: '0'
 
+- task: NuGetAuthenticate@1
+  inputs:
+    nuGetServiceConnections: 'Nuget Org'
+    
 - task: DotNetCoreCLI@2
+  displayName: 'nuget push'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
