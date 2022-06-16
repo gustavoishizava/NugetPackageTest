@@ -19,9 +19,8 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-
-- task: NuGetCommand@2
-  displayName: 'Nuget pack'
+    
+- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
@@ -30,16 +29,9 @@ steps:
     minorVersion: '0'
     patchVersion: '0'
 
-- task: NuGetAuthenticate@1
-  displayName: 'Nuget authentication'
-  inputs:
-    nuGetServiceConnections: 'Nuget Org'
-
-- task: NuGetCommand@2
-  displayName: 'Nuget push'
+- task: DotNetCoreCLI@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: '7b35c6e6-cc88-4207-8f7d-a5656abe7b90'
-    allowPackageConflicts: true
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Nuget Org'
