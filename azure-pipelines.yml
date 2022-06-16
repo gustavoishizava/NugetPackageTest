@@ -31,7 +31,8 @@ steps:
     minorVersion: '0'
     patchVersion: '0'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'custom'
+    custom: 'nuget'
     arguments: 'push $(Build.ArtifactStagingDirectory)/**/*.nupkg -s $(NuGetSourceServerUrl) -k $(NuGetSourceServerApiKey)'
