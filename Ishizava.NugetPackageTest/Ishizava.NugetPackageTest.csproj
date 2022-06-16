@@ -4,6 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>Ishizava.NugetPackageTest</PackageId> 
+    <Version>1.0.0</Version> 
+    <Authors>Gustavo C. Ishizava</Authors> 
+    <Company>Github</Company> 
+    <PackageTags>Test,NugetTest</PackageTags> 
+    <Description>Description test</Description>
+    <ProjectUrl>http://github.com/gustavoishizava/NugetPackageTest</ProjectUrl>
   </PropertyGroup>
 
 </Project>
