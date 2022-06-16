@@ -13,6 +13,8 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  Major: '1'
+  Minor: '0'
 
 steps:
 - task: DotNetCoreCLI@2
@@ -26,10 +28,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '1'
-    minorVersion: '0'
-    patchVersion: '$(rev:.r)'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: '$(Major).$(Minor).$(rev:.r)'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
