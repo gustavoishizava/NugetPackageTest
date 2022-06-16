@@ -31,14 +31,9 @@ steps:
     minorVersion: '0'
     patchVersion: '0'
 
-- task: NuGetAuthenticate@1
-  inputs:
-    nuGetServiceConnections: 'Nuget Org'
-    
-- task: DotNetCoreCLI@2
-  displayName: 'nuget push'
+- task: NuGetCommand@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
     publishFeedCredentials: 'Nuget Org'
