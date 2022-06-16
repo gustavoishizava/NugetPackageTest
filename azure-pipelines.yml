@@ -16,13 +16,13 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
+  displayName: 'Dotnet build'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
     
 - task: DotNetCoreCLI@2
-  displayName: 'nuget pack'
+  displayName: 'Dotnet NuGet pack'
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
@@ -31,8 +31,10 @@ steps:
     minorVersion: '0'
     patchVersion: '0'
 
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
   inputs:
-    command: 'custom'
-    custom: 'nuget'
-    arguments: 'push $(Build.ArtifactStagingDirectory)/**/*.nupkg -s $(NuGetSourceServerUrl) -k $(NuGetSourceServerApiKey)'
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Nuget Org'
