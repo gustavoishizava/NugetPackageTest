@@ -29,7 +29,7 @@ steps:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'byEnvVar'
-    versionEnvVar: '$(Major).$(Minor).$(rev:.r)'
+    versionEnvVar: '$(Major).$(Minor).$(Build.BuildNumber)'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
